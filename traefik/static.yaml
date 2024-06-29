@@ -1,0 +1,44 @@
+# Expose HTTP and HTTPS entrypoints, HTTP to HTTPS 301 redirection is applied here
+entryPoints:
+  websecure:
+    address: ":443"
+    asDefault: true
+    http:
+      tls: true
+
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
+
+# Setup providers
+providers:
+  docker:
+    # Don't add container unless explicitly enabled in container label
+    exposedByDefault: false
+    # Auto discovery using labels and add/remove containers as they are deployed
+    watch: true
+    # Docker network name to communicate with containers
+    network: proxy
+
+  # File provider for dynamic configs (currently only SSL certs)
+  file:
+    # Mount target of ./traefik/dynamic in docker-compose
+    directory: /config/dynamic
+    watch: true
+
+api:
+  insecure: true
+  dashboard: true
+
+# Configure log files to the mounted dir and log levels
+log:
+  level: DEBUG
+  filePath: /logs/traefik.log
+
+accessLog:
+  filePath: /logs/access.log

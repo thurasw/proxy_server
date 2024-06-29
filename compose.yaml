@@ -1,26 +1,8 @@
 services:
   reverse-proxy:
     image: traefik:v3.0
-    command:
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--providers.docker.network=proxy"
-      - "--providers.file.directory=/config"
-
-      # Expose HTTP and HTTPS entrypoints, Apply 301 redirection to HTTPS
-      - "--entryPoints.web.address=:80"
-      - "--entryPoints.websecure.address=:443"
-      - "--entrypoints.websecure.http.tls=true"
-      - "--entryPoints.web.http.redirections.entryPoint.to=websecure"
-      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
-
-      # Configure log files to the mounted dir and log levels
-      - "--accesslog"
-      - "--accesslog.filepath=/logs/access.log"
-      - "--log"
-      - "--log.filepath=/logs/traefik.log"
-      # - "--log.level=DEBUG"
+    # Config folder mounted using bind-mount below
+    command: "--configFile=/config/static.yaml"
     ports:
       # The HTTP(s) port
       - 80:80
@@ -32,7 +14,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       # Logs outside of container
       - ~/data/logs:/logs
-      # Traefik Dynamic configs
+      # Traefik configs
       - ./traefik:/config
     secrets:
       # Expose SSL certificates as secrets
