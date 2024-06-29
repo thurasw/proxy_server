@@ -7,7 +7,6 @@ services:
       # The HTTP(s) port
       - 80:80
       - 443:443
-      # Traefik Web UI (enabled by --api.insecure=true) // Firewall blocks port 8080 so this can be exposed
       - 8080:8080
     volumes:
       # So that Traefik can listen to the Docker events
@@ -21,6 +20,7 @@ services:
       - cert
       - key
     networks:
+      # All deployed services need to be on this docker network
       proxy: {}
 
 networks:

@@ -32,12 +32,14 @@ providers:
     watch: true
 
 api:
+  # The traefik port isn't exposed on the firewall, and it fine for the current setup.
   insecure: true
   dashboard: true
 
 # Configure log files to the mounted dir and log levels
+# **** ENABLE DEBUG LOGS HERE ****
 log:
-  level: DEBUG
+  # level: DEBUG
   filePath: /logs/traefik.log
 
 accessLog:
