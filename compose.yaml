@@ -37,7 +37,7 @@ services:
     secrets:
       # Expose SSL certificates as secrets
       - cert
-      - privkey
+      - key
     networks:
       proxy: {}
 
@@ -49,6 +49,6 @@ networks:
 
 secrets:
   cert:
-    file: /etc/letsencrypt/live/thurasw.me/fullchain.pem
-  privkey:
-    file: /etc/letsencrypt/live/thurasw.me/privkey.pem
+    file: /etc/cloudflare/cert.pem
+  key:
+    file: /etc/cloudflare/key.pem

@@ -3,4 +3,4 @@ tls:
     default:
       defaultCertificate:
         certFile: /run/secrets/cert
-        keyFile: /run/secrets/privkey
+        keyFile: /run/secrets/key
