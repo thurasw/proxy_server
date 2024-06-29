@@ -1,0 +1,17 @@
+services:
+  mongo:
+    image: mongo:7
+    restart: always
+    volumes:
+      - ~/data/mongodb:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+    networks:
+      db.mongo: {}
+
+networks:
+  db.mongo:
+    driver: bridge
+    attachable: true
+    name: db.mongo
